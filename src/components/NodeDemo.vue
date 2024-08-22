@@ -1,14 +1,72 @@
 <script setup lang="ts">
 import {getNodeDataApi} from "@/api/NodeDemo";
 import CommonCard from "@/components/CommonCard.vue";
-import {onBeforeMount} from "vue";
+import {onBeforeMount,ref} from "vue";
 
+const nodesDatas = ref([]);
 // 挂载的时候调用接口
 onBeforeMount(() => {
   getNodeDataApi().then((res) => {
-    console.log(res);
+    if (res.status === 200) {
+      nodesDatas.value = res.data.nodes;
+      const tree = buildTree(nodesDatas.value);
+      console.log(JSON.stringify(tree));
+      const a = flattenTree(tree)
+      console.log(a)
+    }
   })
 });
+
+// 将扁平的数据结构转换为树形结构
+function buildTree(nodes) {
+  const nodeMap = new Map();
+  const rootNodes = [];
+
+  // 将所有节点放入 Map 中
+  nodes.forEach(node => {
+    node.children = [];
+    nodeMap.set(node.node_id, node);
+  });
+
+  // 构建树结构
+  nodes.forEach(node => {
+    if (node.parent_id === null) {
+      rootNodes.push(node);
+    } else {
+      const parentNode = nodeMap.get(node.parent_id);
+      if (parentNode) {
+        parentNode.children.push(node);
+      }
+    }
+  });
+
+  return rootNodes;
+}
+
+// 将树形结构转换为扁平的数据结构
+function flattenTree(tree) {
+  const flatNodes = [];
+
+  function traverse(node) {
+    // 将当前节点添加到扁平数组中
+    flatNodes.push({
+      node_id: node.node_id,
+      node_type: node.node_type,
+      node_name: node.node_name,
+      parent_id: node.parent_id
+    });
+
+    // 递归遍历子节点
+    node.children.forEach(child => traverse(child));
+  }
+
+  // 遍历根节点
+  tree.forEach(rootNode => traverse(rootNode));
+
+  return flatNodes;
+}
+
+
 </script>
 
 <template>
