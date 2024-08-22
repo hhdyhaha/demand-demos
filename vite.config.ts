@@ -17,6 +17,16 @@ export default defineConfig({
             resolvers: [ElementPlusResolver()],
         }),
     ],
+    server: {
+        open: true,
+        proxy: {
+            '/api': {
+                target: 'https://apifoxmock.com/m1/5028648-4688702-default',
+                changeOrigin: true,
+                rewrite: (path) => path.replace(/^\/api/, '')
+            }
+        }
+    },
     resolve: {
         alias: {
             // 关键代码
