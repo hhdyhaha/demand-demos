@@ -9,6 +9,6 @@
 <style scoped lang="scss">
   .node-card {
     width: 10%;
-    height: 10%;
+    height: 100%;
   }
 </style>

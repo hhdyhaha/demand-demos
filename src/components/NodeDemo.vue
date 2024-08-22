@@ -7,7 +7,13 @@ import CommonCard from "@/components/CommonCard.vue";
     <el-container>
       <el-header class="header-box">动态节点！</el-header>
       <el-main class="main-box">
-        <CommonCard />
+        <div class = "main-box-level">
+          <CommonCard />
+        </div>
+        <div class = "main-box-level">
+          <CommonCard />
+          <CommonCard />
+        </div>
       </el-main>
     </el-container>
   </div>
@@ -36,7 +42,12 @@ import CommonCard from "@/components/CommonCard.vue";
       flex-grow: 1; // 让 .main-box 自动扩展以填充剩余空间
       width: 100%;
       display: flex;
-      justify-content: space-around;
+      flex-direction: column;
+      .main-box-level {
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+      }
     }
   }
 </style>
