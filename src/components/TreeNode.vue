@@ -31,6 +31,5 @@ const props = defineProps({
   justify-content: center;
   flex-wrap: nowrap;
   margin-top: 20px;
-  padding-left: 40px;
 }
 </style>
