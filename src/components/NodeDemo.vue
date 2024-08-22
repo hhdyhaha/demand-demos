@@ -1,17 +1,19 @@
 <script setup lang="ts">
-import {getNodeDataApi} from "@/api/NodeDemo";
+import { getNodeDataApi } from "@/api/NodeDemo";
 import CommonCard from "@/components/CommonCard.vue";
-import {onBeforeMount,ref} from "vue";
+import { onBeforeMount, ref } from "vue";
 
 const nodesDatas = ref([]);
+const tree = ref([]);
+
 // 挂载的时候调用接口
 onBeforeMount(() => {
   getNodeDataApi().then((res) => {
     if (res.status === 200) {
       nodesDatas.value = res.data.nodes;
-      const tree = buildTree(nodesDatas.value);
-      console.log(JSON.stringify(tree));
-      const a = flattenTree(tree)
+      tree.value = buildTree(nodesDatas.value);
+      console.log(JSON.stringify(tree.value));
+      const a = flattenTree(tree.value)
       console.log(a)
     }
   })
@@ -65,8 +67,6 @@ function flattenTree(tree) {
 
   return flatNodes;
 }
-
-
 </script>
 
 <template>
@@ -75,11 +75,7 @@ function flattenTree(tree) {
       <el-header class="header-box">动态节点！</el-header>
       <el-main class="main-box">
         <div class="main-box-level">
-          <CommonCard/>
-        </div>
-        <div class="main-box-level">
-          <CommonCard/>
-          <CommonCard/>
+          <CommonCard v-for="rootNode in tree" :key="rootNode.node_id" :node="rootNode" />
         </div>
       </el-main>
     </el-container>
@@ -119,4 +115,3 @@ function flattenTree(tree) {
   }
 }
 </style>
-
