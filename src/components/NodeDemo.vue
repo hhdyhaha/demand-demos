@@ -3,10 +3,11 @@
 </script>
 
 <template>
-  <div>
+  <div class="h-full">
     节点需求初始化
   </div>
 </template>
 
-<style scoped>
+<style lang="scss" scoped>
+
 </style>
