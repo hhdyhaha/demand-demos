@@ -1,18 +1,5 @@
-<template>
-  <div class="common-card">
-    <div class="node-content">
-      {{ node.node_name }} ({{ node.node_type }})
-    </div>
-    <div v-if="node.children.length" class="children">
-      <CommonCard v-for="child in node.children" :key="child.node_id" :node="child" />
-    </div>
-  </div>
-</template>
-
 <script setup lang="ts">
-import { defineProps } from 'vue';
-
-const props = defineProps({
+defineProps({
   node: {
     type: Object,
     required: true
@@ -20,20 +7,32 @@ const props = defineProps({
 });
 </script>
 
+<template>
+  <div class="common-card">
+    <h3>{{ node.node_name }}</h3>
+    <p>ID: {{ node.node_id }}</p>
+    <p>Type: {{ node.node_type }}</p>
+  </div>
+</template>
+
 <style scoped>
 .common-card {
-  margin-left: 20px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  padding: 10px;
-  margin-bottom: 10px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 15px;
+  margin: 10px;
+  background-color: #f9f9f9;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  min-width: 200px;
 }
 
-.node-content {
-  font-weight: bold;
+h3 {
+  margin-top: 0;
+  color: #333;
 }
 
-.children {
-  margin-top: 10px;
+p {
+  margin: 5px 0;
+  color: #666;
 }
 </style>

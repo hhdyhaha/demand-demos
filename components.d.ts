@@ -14,5 +14,6 @@ declare module 'vue' {
     ElHeader: typeof import('element-plus/es')['ElHeader']
     ElMain: typeof import('element-plus/es')['ElMain']
     NodeDemo: typeof import('./src/components/NodeDemo.vue')['default']
+    TreeNode: typeof import('./src/components/TreeNode.vue')['default']
   }
 }
