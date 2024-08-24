@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import CommonCard from "@/components/CommonCard.vue";
-import { defineProps } from 'vue';
 
 const props = defineProps({
   node: {
@@ -21,15 +20,17 @@ const props = defineProps({
 
 <style scoped>
 .tree-node {
+  width: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
   margin-bottom: 20px;
 }
 .children {
+  width: 100%;
   display: flex;
-  justify-content: center;
+  justify-content: flex-start;
   flex-wrap: nowrap;
-  margin-top: 20px;
+  margin-top: 50px;
 }
 </style>
