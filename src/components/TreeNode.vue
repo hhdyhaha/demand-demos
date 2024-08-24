@@ -11,14 +11,14 @@ const props = defineProps({
 
 <template>
   <div class="tree-node">
-    <CommonCard :node="node" />
+    <CommonCard :node="node"/>
     <div v-if="node.children && node.children.length" class="children">
-      <TreeNode v-for="child in node.children" :key="child.node_id" :node="child" />
+      <TreeNode v-for="child in node.children" :key="child.node_id" :node="child"/>
     </div>
   </div>
 </template>
 
-<style scoped>
+<style lang="scss" scoped>
 .tree-node {
   width: 100%;
   display: flex;
@@ -31,6 +31,5 @@ const props = defineProps({
   display: flex;
   justify-content: flex-start;
   flex-wrap: nowrap;
-  margin-top: 50px;
 }
 </style>

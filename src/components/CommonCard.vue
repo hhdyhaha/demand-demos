@@ -13,6 +13,7 @@ defineProps({
     <p>ID: {{ node.node_id }}</p>
     <p>Type: {{ node.node_type }}</p>
   </div>
+  <div class="one-children-line" v-if="node.children && node.children.length === 1"></div>
 </template>
 
 <style scoped>
@@ -27,6 +28,28 @@ defineProps({
 
 }
 
+
+/* 直线 */
+.one-children-line {
+  position: relative;
+  width: var(--one-children-line-width);
+  height: 110px;
+  margin-top: -10px;
+  background-color: #D8D8D8;
+}
+
+/* 绘制三角箭头 */
+.one-children-line:after {
+  content: "";
+  position: absolute;
+  border-top: var(--one-children-line-width) solid #D8D8D8;
+  border-bottom: var(--one-children-line-width) solid transparent;
+  border-left: var(--one-children-line-width) solid transparent;
+  border-right: var(--one-children-line-width) solid transparent;
+  margin-top: 110px;
+  margin-left: calc(-1 * var(--one-children-line-width));
+}
+
 h3 {
   margin-top: 0;
   color: #333;
@@ -35,5 +58,12 @@ h3 {
 p {
   margin: 5px 0;
   color: #666;
+}
+</style>
+
+<style>
+/* 设置 */
+:root {
+  --one-children-line-width: 10px;
 }
 </style>
