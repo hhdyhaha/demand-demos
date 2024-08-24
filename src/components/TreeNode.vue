@@ -13,7 +13,7 @@ const props = defineProps({
   <div class="tree-node">
     <CommonCard :node="node"/>
     <div v-if="node.children && node.children.length > 1" class="parent-line"></div>
-    <div v-if="node.children && node.children.length" class="children">
+    <div v-if="node.children && node.children.length" class="children-box">
       <TreeNode v-for="child in node.children" :key="child.node_id" :node="child"/>
     </div>
   </div>
@@ -28,7 +28,7 @@ const props = defineProps({
   margin-bottom: 20px;
 }
 
-.children {
+.children-box {
   width: 100%;
   display: flex;
   justify-content: flex-start;
