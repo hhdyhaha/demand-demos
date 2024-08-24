@@ -20,6 +20,7 @@ export default defineConfig(({command, mode}) => {
             }),
         ],
         server: {
+            host: '0.0.0.0',
             open: true,
             proxy: {
                 [env.VITE_APP_BASE_API]: {
