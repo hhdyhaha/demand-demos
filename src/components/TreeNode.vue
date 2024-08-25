@@ -1,8 +1,9 @@
 <script setup lang="ts">
-import CommonCard from "@/components/CommonCard.vue";
-import { useNodesStore } from "@/stores/index.ts";
+import { ref, onMounted, onUnmounted, nextTick } from 'vue'
+import CommonCard from "@/components/CommonCard.vue"
+import { useNodesStore } from "@/stores/index.ts"
 import { storeToRefs } from 'pinia'
-import { ref, onMounted,  onUnmounted} from 'vue'
+
 const store = useNodesStore()
 const { multiNodes } = storeToRefs(store)
 
@@ -11,7 +12,7 @@ const props = defineProps({
     type: Object,
     required: true
   }
-});
+})
 
 const nodeRef = ref(null)
 
@@ -22,32 +23,53 @@ if (props.node.children && props.node.children.length > 1) {
 function findParentNode() {
   if (props.node.children && props.node.children.length > 1) {
     if (nodeRef.value) {
-      console.log(nodeRef.value.offsetWidth)
-      const parentLineAfter = document.createElement('div')
-      parentLineAfter.className = 'parent-line-after'
-      parentLineAfter.style.width = `${nodeRef.value.offsetWidth-250}px`
-      parentLineAfter.style.height = `10px`
-      parentLineAfter.style.backgroundColor = '#D8D8D8'
-      parentLineAfter.style.position = 'absolute'
-      parentLineAfter.style.left = `${120}px`
-      nodeRef.value.appendChild(parentLineAfter)
+      nextTick(() => {
+        const parentLineAfter = document.createElement('div')
+        parentLineAfter.className = 'parent-line-after'
+
+        // 计算子节点的总宽度
+        const childrenWidth = Array.from(nodeRef.value.children)
+            .reduce((total, child) => total + child.offsetWidth, 0)
+
+        // 设置线的宽度为子节点总宽度减去一些边距
+        const lineWidth = Math.max(childrenWidth - 40, 0) // 40px for margins
+        parentLineAfter.style.width = `${lineWidth}px`
+
+        parentLineAfter.style.height = `10px`
+        parentLineAfter.style.backgroundColor = '#D8D8D8'
+        parentLineAfter.style.position = 'absolute'
+        parentLineAfter.style.top = '-1px'
+        parentLineAfter.style.left = '20px'
+
+        nodeRef.value.appendChild(parentLineAfter)
+      })
     }
   }
 }
 
+function handleResize() {
+  // 移除旧的线
+  if (nodeRef.value) {
+    const elements = nodeRef.value.querySelectorAll('.parent-line-after')
+    elements.forEach(el => el.remove())
+  }
+  // 重新计算和添加线
+  findParentNode()
+}
+
 onMounted(() => {
   findParentNode()
-  window.addEventListener('resize', findParentNode);
-  window.addEventListener('scroll', findParentNode);
+  window.addEventListener('resize', handleResize)
 })
 
 onUnmounted(() => {
-  window.removeEventListener('resize', findParentNode);
-  window.removeEventListener('scroll', findParentNode);
-});
-
-// 滚动监听
-
+  window.removeEventListener('resize', handleResize)
+  // 清理动态创建的元素
+  if (nodeRef.value) {
+    const elements = nodeRef.value.querySelectorAll('.parent-line-after')
+    elements.forEach(el => el.remove())
+  }
+})
 </script>
 
 <template>
@@ -74,7 +96,7 @@ onUnmounted(() => {
   display: flex;
   justify-content: flex-start;
   flex-wrap: nowrap;
-  position: relative; // Ensure parent-line-after is positioned relative to this container
+  position: relative;
 }
 
 .parent-line {
@@ -82,5 +104,13 @@ onUnmounted(() => {
   width: 10px;
   height: 50px;
   background-color: #D8D8D8;
+}
+
+.parent-line-after {
+  position: absolute;
+  height: 10px;
+  background-color: #D8D8D8;
+  top: -1px;
+  left: 20px;
 }
 </style>
