@@ -34,6 +34,35 @@ const calculatePosition = () => {
     if (parentMultiNodes && parentMultiNodes.node_position){
       const {top:parentTop, left:parentLeft} = parentMultiNodes.node_position;
       console.log(`父节点位置: top=${parentTop}, left=${parentLeft}`)
+
+      // 获取元素children-line
+      const childrenLine = document.querySelector('.children-line');
+
+      // 创建SVG元素
+      const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+      svg.setAttribute("width", "100%");
+      svg.setAttribute("height", "100%");
+      svg.style.position = "absolute";
+      svg.style.top = "0";
+      svg.style.left = "0";
+      svg.style.pointerEvents = "none";
+
+      // 创建线条
+      const line = document.createElementNS("http://www.w3.org/2000/svg", "line");
+      line.setAttribute("x1", left+120+'');
+      line.setAttribute("y1", top-120+'');
+      line.setAttribute("x2", parentLeft+120+'');
+      line.setAttribute("y2", parentTop+90+'');
+      line.setAttribute("stroke", "#D8D8D8");
+      line.setAttribute("stroke-width", "10");
+
+      // 将线条添加到SVG中
+      svg.appendChild(line);
+
+      // 将SVG插入到children-line元素之前
+      if (childrenLine && childrenLine.parentNode){
+        childrenLine.parentNode.insertBefore(svg, childrenLine);
+      }
     }
   }
 };
@@ -64,13 +93,13 @@ onMounted(() => {
 onUnmounted(() => {
   window.removeEventListener('resize', calculatePosition);
 });
+
+// 上下左右滑动滚动条 调用函数calculatePosition
+window.addEventListener('scroll', calculatePosition);
 </script>
 
 <template>
   <div class="children-line" v-if="node.parent_id !== null "></div>
-  <svg width="200" height="10">
-    <line x1="10" y1="10" x2="60" y2="10" stroke="#D8D8D8" stroke-width="10" />
-  </svg>
   <div class="common-card" ref="commonCardRef">
     <h3>{{ node.node_name }}</h3>
     <p>ID: {{ node.node_id }}</p>
