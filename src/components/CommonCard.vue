@@ -46,20 +46,19 @@ const calculatePosition = () => {
       svg.style.top = "0";
       svg.style.left = "0";
       svg.style.pointerEvents = "none";
-
       // 创建线条
       const line = document.createElementNS("http://www.w3.org/2000/svg", "line");
       line.setAttribute("x1", left+120+'');
       line.setAttribute("y1", top-120+'');
       line.setAttribute("x2", parentLeft+120+'');
-      line.setAttribute("y2", parentTop+90+'');
+      line.setAttribute("y2", parentTop+175+'');
       line.setAttribute("stroke", "#D8D8D8");
       line.setAttribute("stroke-width", "10");
 
       // 将线条添加到SVG中
       svg.appendChild(line);
 
-      // 将SVG插入到children-line元素之前
+      // 将SVG插入到children-line:before
       if (childrenLine && childrenLine.parentNode){
         childrenLine.parentNode.insertBefore(svg, childrenLine);
       }
@@ -94,8 +93,6 @@ onUnmounted(() => {
   window.removeEventListener('resize', calculatePosition);
 });
 
-// 上下左右滑动滚动条 调用函数calculatePosition
-window.addEventListener('scroll', calculatePosition);
 </script>
 
 <template>
