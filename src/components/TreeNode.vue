@@ -1,5 +1,9 @@
 <script setup lang="ts">
 import CommonCard from "@/components/CommonCard.vue";
+import { useNodesStore } from "@/stores/index.ts";
+import { storeToRefs } from 'pinia'
+const store = useNodesStore()
+const { multiNodes } = storeToRefs(store)
 
 const props = defineProps({
   node: {
@@ -7,6 +11,10 @@ const props = defineProps({
     required: true
   }
 });
+
+if(props.node.children && props.node.children.length > 1){
+  multiNodes.value.push({'node_id':props.node.node_id})
+}
 </script>
 
 <template>
