@@ -84,19 +84,19 @@ function isParentIdInMultiNodes() {
   return multiNodes.value.some(nodeItem => nodeItem.node_id === props.node.parent_id);
 }
 
-onMounted(() => {
-  calculatePosition()
-  window.addEventListener('resize', calculatePosition);
-});
-
-onUnmounted(() => {
-  window.removeEventListener('resize', calculatePosition);
-});
+// onMounted(() => {
+//   calculatePosition()
+//   window.addEventListener('resize', calculatePosition);
+// });
+//
+// onUnmounted(() => {
+//   window.removeEventListener('resize', calculatePosition);
+// });
 
 </script>
 
 <template>
-  <div class="children-line" v-if="node.parent_id !== null "></div>
+<!--  <div class="children-line" v-if="node.parent_id !== null "></div>-->
   <div class="common-card" ref="commonCardRef">
     <h3>{{ node.node_name }}</h3>
     <p>ID: {{ node.node_id }}</p>
@@ -109,7 +109,7 @@ onUnmounted(() => {
   border: 1px solid #ddd;
   border-radius: 8px;
   padding: 15px;
-  margin: 10px;
+  margin: 10px 10px 50px 10px;
   background-color: #f9f9f9;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   width: 200px;

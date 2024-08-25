@@ -20,7 +20,7 @@ if(props.node.children && props.node.children.length > 1){
 <template>
   <div class="tree-node">
     <CommonCard :node="node"/>
-    <div v-if="node.children && node.children.length > 1" class="parent-line"></div>
+<!--    <div v-if="node.children && node.children.length > 1" class="parent-line"></div>-->
     <div v-if="node.children && node.children.length" class="children-box">
       <TreeNode v-for="child in node.children" :key="child.node_id" :node="child"/>
     </div>
