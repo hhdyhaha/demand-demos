@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref, onMounted, onUnmounted } from "vue";
-import { useNodesStore } from "@/stores/index.ts";
+import { useNodesStore } from "@/stores";
 import { storeToRefs } from 'pinia'
 const store = useNodesStore()
 const { multiNodes } = storeToRefs(store)

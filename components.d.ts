@@ -7,11 +7,14 @@ export {}
 /* prettier-ignore */
 declare module 'vue' {
   export interface GlobalComponents {
-    CommonCard: typeof import('./src/components/CommonCard.vue')['default']
+    CommonCard: typeof import('./src/components/TreeNode/CommonCard.vue')['default']
+    DragH5: typeof import('./src/components/DragH5/DragH5.vue')['default']
     ElContainer: typeof import('element-plus/es')['ElContainer']
     ElHeader: typeof import('element-plus/es')['ElHeader']
     ElMain: typeof import('element-plus/es')['ElMain']
-    NodeDemo: typeof import('./src/components/NodeDemo.vue')['default']
-    TreeNode: typeof import('./src/components/TreeNode.vue')['default']
+    ElMenu: typeof import('element-plus/es')['ElMenu']
+    ElMenuItem: typeof import('element-plus/es')['ElMenuItem']
+    NodeDemo: typeof import('./src/components/TreeNode/NodeDemo.vue')['default']
+    TreeNode: typeof import('./src/components/TreeNode/TreeNode.vue')['default']
   }
 }

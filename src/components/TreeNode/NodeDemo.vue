@@ -2,40 +2,17 @@
 import { getNodeDataApi } from "@/api/NodeDemo";
 import TreeNode from "./TreeNode.vue";
 import { onBeforeMount, ref } from "vue";
+import { buildTree } from "@/utils/treeUtils";
 
 const nodesDatas = ref([]);
 
 onBeforeMount(() => {
   getNodeDataApi().then((res) => {
     if (res.status === 200) {
-      const tree = buildTree(res.data.nodes);
-      nodesDatas.value = tree;
+      nodesDatas.value = buildTree(res.data.nodes);
     }
   });
 });
-
-// 将扁平的数据结构转换为树形结构
-function buildTree(nodes) {
-  const nodeMap = new Map();
-  const rootNodes = [];
-  // 将所有节点放入 Map 中
-  nodes.forEach(node => {
-    node.children = [];
-    nodeMap.set(node.node_id, node);
-  });
-  // 构建树结构
-  nodes.forEach(node => {
-    if (node.parent_id === null) {
-      rootNodes.push(node);
-    } else {
-      const parentNode = nodeMap.get(node.parent_id);
-      if (parentNode) {
-        parentNode.children.push(node);
-      }
-    }
-  });
-  return rootNodes;
-}
 </script>
 
 <template>

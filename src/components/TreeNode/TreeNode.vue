@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref, onMounted, onUnmounted, nextTick } from 'vue'
-import CommonCard from "@/components/CommonCard.vue"
-import { useNodesStore } from "@/stores/index.ts"
+import CommonCard from "@/components/TreeNode/CommonCard.vue"
+import { useNodesStore } from "@/stores"
 import { storeToRefs } from 'pinia'
 
 const store = useNodesStore()
