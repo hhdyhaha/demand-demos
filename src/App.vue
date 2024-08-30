@@ -1,9 +1,10 @@
 <script setup lang="ts">
-import NodeDemo from './components/NodeDemo.vue'
+// 导入组件 Layout
+import Layout from "@/layout/Layout.vue";
 </script>
 
 <template>
-  <NodeDemo />
+  <Layout/>
 </template>
 
 <style scoped>
