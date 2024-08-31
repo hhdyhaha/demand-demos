@@ -21,18 +21,26 @@ const urlArr = ref([
   }
 ])
 
+// 判断right-box的范围坐标，并保存
+const rightBox = ref({
+  x: 0,
+  y: 0,
+  width: 0,
+  height: 0
+})
+
 // 每张图片添加拖拽事件
-const handleDragStart = (e: DragEvent) => {
-  console.log('drag start', e)
+const handleDragStart = (e: DragEvent, imgId:number) => {
+  console.log('drag start', e,imgId)
 }
 
-const handleDragEnd = (e: DragEvent) => {
+const handleDragEnd = (e: DragEvent, imgId:number) => {
   console.log('drag end', e)
 }
 
-// const drag = (e: DragEvent) => {
-//   console.log('drag', e)
-// }
+const drag = (e: DragEvent, imgId:number) => {
+  // console.log('drag', e)
+}
 </script>
 
 <template>
@@ -40,11 +48,10 @@ const handleDragEnd = (e: DragEvent) => {
     <!--左侧展示页面和右侧展示页面，左侧展示图片，右侧展示一个画布，后续要将左侧的图片拖拽到右侧画布上-->
     <div class="left-box">
       <el-image style="width: 100px; height: 100px; margin: 2px" v-for="item in urlArr" :key="item.imgId" :src="item.url"
-                :alt="item.desc" @dragstart="handleDragStart" @dragend="handleDragEnd" @drag="drag" draggable="true"
+                :alt="item.desc" @dragstart="handleDragStart($event,item.imgId)" @dragend="handleDragEnd($event,item.imgId)" @drag="drag($event,item.imgId)" draggable="true"
       />
     </div>
     <div class="right-box">
-      <!--      <canvas id="canvas" width="800" height="600"></canvas>-->
     </div>
   </div>
 </template>
