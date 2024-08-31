@@ -4,8 +4,8 @@ import DragH5 from "@/components/DragH5/DragH5.vue";
 import { ref, computed } from 'vue';
 
 const templateMap = [
-  { key: '1', component: NodeDemo, name: 'Node Demo' },
-  { key: '2', component: DragH5, name: 'Drag H5' }
+  { key: '1', component: DragH5, name: 'Drag H5' },
+  { key: '2', component: NodeDemo, name: 'Node Demo' },
 ];
 
 const activeIndex = ref('1');
@@ -37,4 +37,10 @@ const handleSelect = (key: string) => {
 </template>
 
 <style scoped>
+.common-layout {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+}
 </style>
