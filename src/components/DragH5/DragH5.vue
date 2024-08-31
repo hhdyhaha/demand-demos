@@ -30,10 +30,14 @@ const handleDrop = (e: DragEvent) => {
   if (img) {
     const rightBoxElement = e.currentTarget as HTMLElement;
     const {width, height} = rightBoxElement.getBoundingClientRect();
+    const x = e.clientX - rightBoxElement.getBoundingClientRect().left;
+    const y = e.clientY - rightBoxElement.getBoundingClientRect().top;
     rightBox.value.images.push({
       ...img,
       width: imgId === 1 ? width : undefined,
-      height: imgId === 1 ? height : undefined
+      height: imgId === 1 ? height : undefined,
+      x: imgId !== 1 ? x : undefined,
+      y: imgId !== 1 ? y : undefined
     });
   }
 };
@@ -64,7 +68,12 @@ const handleDragOver = (e: DragEvent) => {
           :key="item.imgId"
           :src="item.url"
           :alt="item.desc"
-          :style="{ width: item.width ? item.width + 'px' : '100px', height: item.height ? item.height + 'px' : '100px' }"
+          :style="{
+    width: item.width ? item.width + 'px' : '100px',
+    height: item.height ? item.height + 'px' : '100px',
+    left: item.x ? item.x + 'px' : '0px',
+    top: item.y ? item.y + 'px' : '0px'
+  }"
       />
     </div>
   </div>
@@ -95,6 +104,7 @@ const handleDragOver = (e: DragEvent) => {
   background-color: #c3baba;
   min-width: 400px;
   position: relative;
+
   .img-item {
     position: absolute;
     left: 0;
