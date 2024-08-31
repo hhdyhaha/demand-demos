@@ -1,57 +1,71 @@
 <script setup lang="ts">
 import {ref} from 'vue';
 
-// 图片地址 数组，里面有三个图片地址
 const urlArr = ref([
-
   {
     imgId: 1,
     url: 'https://tse3-mm.cn.bing.net/th/id/OIP-C.vfWphae_aDOi2hZU_xpuRgHaOA?rs=1&pid=ImgDetMain',
-    desc: '背景图片',
+    desc: '背景图片'
   },
-  {
-    imgId: 2,
-    url: 'https://puui.qpic.cn/vpic_cover/t3504ncwn19/t3504ncwn19_1677729444_hz.jpg/1280',
-    desc: '图片2',
-  },
-  {
-    imgId: 3,
-    url: 'https://puui.qpic.cn/vpic_cover/i35043m4h3x/i35043m4h3x_1677833515_hz.jpg/1280',
-    desc: '图片3',
-  }
-])
+  {imgId: 2, url: 'https://puui.qpic.cn/vpic_cover/t3504ncwn19/t3504ncwn19_1677729444_hz.jpg/1280', desc: '图片2'},
+  {imgId: 3, url: 'https://puui.qpic.cn/vpic_cover/i35043m4h3x/i35043m4h3x_1677833515_hz.jpg/1280', desc: '图片3'}
+]);
 
-// 判断right-box的范围坐标，并保存
 const rightBox = ref({
   x: 0,
   y: 0,
   width: 0,
-  height: 0
-})
+  height: 0,
+  images: [] as Array<{ imgId: number, url: string, desc: string, width?: number, height?: number }>
+});
 
-// 每张图片添加拖拽事件
-const handleDragStart = (e: DragEvent, imgId:number) => {
-  console.log('drag start', e,imgId)
-}
+const handleDragStart = (e: DragEvent, imgId: number) => {
+  e.dataTransfer?.setData('imgId', imgId.toString());
+};
 
-const handleDragEnd = (e: DragEvent, imgId:number) => {
-  console.log('drag end', e)
-}
+const handleDrop = (e: DragEvent) => {
+  e.preventDefault();
+  const imgId = parseInt(e.dataTransfer?.getData('imgId') || '0');
+  const img = urlArr.value.find(item => item.imgId === imgId);
+  if (img) {
+    const rightBoxElement = e.currentTarget as HTMLElement;
+    const {width, height} = rightBoxElement.getBoundingClientRect();
+    rightBox.value.images.push({
+      ...img,
+      width: imgId === 1 ? width : undefined,
+      height: imgId === 1 ? height : undefined
+    });
+  }
+};
 
-const drag = (e: DragEvent, imgId:number) => {
-  // console.log('drag', e)
-}
+const handleDragOver = (e: DragEvent) => {
+  e.preventDefault();
+};
 </script>
 
 <template>
   <div class="drag-h5-box">
-    <!--左侧展示页面和右侧展示页面，左侧展示图片，右侧展示一个画布，后续要将左侧的图片拖拽到右侧画布上-->
     <div class="left-box">
-      <el-image style="width: 100px; height: 100px; margin: 2px" v-for="item in urlArr" :key="item.imgId" :src="item.url"
-                :alt="item.desc" @dragstart="handleDragStart($event,item.imgId)" @dragend="handleDragEnd($event,item.imgId)" @drag="drag($event,item.imgId)" draggable="true"
+      <el-image
+          v-for="item in urlArr"
+          :key="item.imgId"
+          :src="item.url"
+          :alt="item.desc"
+          style="width: 100px; height: 100px; margin: 2px"
+          @dragstart="handleDragStart($event, item.imgId)"
+          draggable="true"
       />
     </div>
-    <div class="right-box">
+    <div class="right-box" @dragover="handleDragOver" @drop="handleDrop">
+      <el-image
+          class="img-item"
+          fit="fill"
+          v-for="item in rightBox.images"
+          :key="item.imgId"
+          :src="item.url"
+          :alt="item.desc"
+          :style="{ width: item.width ? item.width + 'px' : '100px', height: item.height ? item.height + 'px' : '100px' }"
+      />
     </div>
   </div>
 </template>
@@ -77,11 +91,14 @@ const drag = (e: DragEvent, imgId:number) => {
 .right-box {
   width: calc(40% - 300px);
   height: 100%;
-  background-color: #f0f0f0;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  padding: 0;
+  background-color: #c3baba;
   min-width: 400px;
+  position: relative;
+  .img-item {
+    position: absolute;
+    left: 0;
+  }
 }
 
 #canvas {
