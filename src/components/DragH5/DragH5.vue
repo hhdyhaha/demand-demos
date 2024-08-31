@@ -7,8 +7,16 @@ const urlArr = ref([
     url: 'https://tse3-mm.cn.bing.net/th/id/OIP-C.vfWphae_aDOi2hZU_xpuRgHaOA?rs=1&pid=ImgDetMain',
     desc: '背景图片'
   },
-  {imgId: 2, url: 'https://puui.qpic.cn/vpic_cover/t3504ncwn19/t3504ncwn19_1677729444_hz.jpg/1280', desc: '图片2'},
-  {imgId: 3, url: 'https://puui.qpic.cn/vpic_cover/i35043m4h3x/i35043m4h3x_1677833515_hz.jpg/1280', desc: '图片3'}
+  {
+    imgId: 2,
+    url: 'https://puui.qpic.cn/vpic_cover/t3504ncwn19/t3504ncwn19_1677729444_hz.jpg/1280',
+    desc: '图片2'
+  },
+  {
+    imgId: 3,
+    url: 'https://puui.qpic.cn/vpic_cover/i35043m4h3x/i35043m4h3x_1677833515_hz.jpg/1280',
+    desc: '图片3'
+  }
 ]);
 
 const rightBox = ref({
@@ -32,6 +40,22 @@ const handleDrop = (e: DragEvent) => {
     const {width, height} = rightBoxElement.getBoundingClientRect();
     const x = e.clientX - rightBoxElement.getBoundingClientRect().left;
     const y = e.clientY - rightBoxElement.getBoundingClientRect().top;
+    // 判断当前img是否已经在rightBox中，如果已经在了，更新数据，如果不存在，添加数据
+    if (rightBox.value.images.some(item => item.imgId === imgId)) {
+      rightBox.value.images = rightBox.value.images.map(item => {
+        if (item.imgId === imgId) {
+          return {
+            ...item,
+            width: imgId === 1 ? width : item.width,
+            height: imgId === 1 ? height : item.height,
+            x: imgId !== 1 ? x : item.x,
+            y: imgId !== 1 ? y : item.y
+          };
+        }
+        return item;
+      });
+      return;
+    }
     rightBox.value.images.push({
       ...img,
       width: imgId === 1 ? width : undefined,
@@ -68,6 +92,7 @@ const handleDragOver = (e: DragEvent) => {
           :key="item.imgId"
           :src="item.url"
           :alt="item.desc"
+          @dragstart="handleDragStart($event, item.imgId)"
           :style="{
     width: item.width ? item.width + 'px' : '100px',
     height: item.height ? item.height + 'px' : '100px',
