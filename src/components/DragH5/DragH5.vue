@@ -20,13 +20,28 @@ const urlArr = ref([
     desc: '图片3',
   }
 ])
+
+// 每张图片添加拖拽事件
+const handleDragStart = (e: DragEvent) => {
+  console.log('drag start', e)
+}
+
+const handleDragEnd = (e: DragEvent) => {
+  console.log('drag end', e)
+}
+
+// const drag = (e: DragEvent) => {
+//   console.log('drag', e)
+// }
 </script>
 
 <template>
   <div class="drag-h5-box">
     <!--左侧展示页面和右侧展示页面，左侧展示图片，右侧展示一个画布，后续要将左侧的图片拖拽到右侧画布上-->
     <div class="left-box">
-      <img style="width: 100px; height: 100px; margin: 2px" v-for="item in urlArr" :key="item.imgId" :src="item.url" :alt="item.desc"/>
+      <el-image style="width: 100px; height: 100px; margin: 2px" v-for="item in urlArr" :key="item.imgId" :src="item.url"
+                :alt="item.desc" @dragstart="handleDragStart" @dragend="handleDragEnd" @drag="drag" draggable="true"
+      />
     </div>
     <div class="right-box">
       <!--      <canvas id="canvas" width="800" height="600"></canvas>-->
