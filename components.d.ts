@@ -8,7 +8,9 @@ export {}
 declare module 'vue' {
   export interface GlobalComponents {
     CommonCard: typeof import('./src/components/TreeNode/CommonCard.vue')['default']
+    DescriptionTextControl: typeof import('./src/components/DescriptionTextControl/DescriptionTextControl.vue')['default']
     DragH5: typeof import('./src/components/DragH5/DragH5.vue')['default']
+    ElButton: typeof import('element-plus/es')['ElButton']
     ElContainer: typeof import('element-plus/es')['ElContainer']
     ElHeader: typeof import('element-plus/es')['ElHeader']
     ElImage: typeof import('element-plus/es')['ElImage']

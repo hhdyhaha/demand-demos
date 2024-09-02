@@ -1,14 +1,16 @@
 <script setup lang="ts">
 import NodeDemo from '@/components/TreeNode/NodeDemo.vue';
 import DragH5 from "@/components/DragH5/DragH5.vue";
+import DescriptionTextControl from "@/components/DescriptionTextControl/DescriptionTextControl.vue";
 import { ref, computed } from 'vue';
 
 const templateMap = [
   { key: '1', component: DragH5, name: 'Drag H5' },
   { key: '2', component: NodeDemo, name: 'Node Demo' },
+  { key: '3', component: DescriptionTextControl, name: 'Description Text Control' }
 ];
 
-const activeIndex = ref('1');
+const activeIndex = ref('3');
 const activeComponent = computed(() => {
   const activeTemplate = templateMap.find(template => template.key === activeIndex.value);
   return activeTemplate ? activeTemplate.component : null;
