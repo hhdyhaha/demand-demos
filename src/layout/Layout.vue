@@ -2,15 +2,17 @@
 import NodeDemo from '@/components/TreeNode/NodeDemo.vue';
 import DragH5 from "@/components/DragH5/DragH5.vue";
 import DescriptionTextControl from "@/components/DescriptionTextControl/DescriptionTextControl.vue";
+import LargeFileUpload from "@/components/LargeFileUpload/LargeFileUpload.vue";
 import { ref, computed } from 'vue';
 
 const templateMap = [
   { key: '1', component: DragH5, name: 'Drag H5' },
   { key: '2', component: NodeDemo, name: 'Node Demo' },
-  { key: '3', component: DescriptionTextControl, name: 'Description Text Control' }
+  // { key: '3', component: DescriptionTextControl, name: 'Description Text Control' },
+  { key: '4', component: LargeFileUpload, name: 'Large File Upload' },
 ];
 
-const activeIndex = ref('3');
+const activeIndex = ref('1');
 const activeComponent = computed(() => {
   const activeTemplate = templateMap.find(template => template.key === activeIndex.value);
   return activeTemplate ? activeTemplate.component : null;

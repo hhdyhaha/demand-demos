@@ -17,6 +17,7 @@ declare module 'vue' {
     ElMain: typeof import('element-plus/es')['ElMain']
     ElMenu: typeof import('element-plus/es')['ElMenu']
     ElMenuItem: typeof import('element-plus/es')['ElMenuItem']
+    LargeFileUpload: typeof import('./src/components/LargeFileUpload/LargeFileUpload.vue')['default']
     NodeDemo: typeof import('./src/components/TreeNode/NodeDemo.vue')['default']
     TreeNode: typeof import('./src/components/TreeNode/TreeNode.vue')['default']
   }
