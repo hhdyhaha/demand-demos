@@ -66,37 +66,37 @@ const editorConfig: Partial<IEditorConfig> = {
     },
   },
   MENU_CONF: {
-    // “上传附件”菜单的配置
-    uploadAttachment: {
-      server: '/api/upload', // 服务端地址
-      timeout: 5 * 1000, // 5s
-
-      fieldName: 'custom-fileName',
-      meta: { token: 'xxx', a: 100 }, // 请求时附加的数据
-      metaWithUrl: true, // meta 拼接到 url 上
-      headers: { Accept: 'text/x-json' },
-
-      maxFileSize: 10 * 1024 * 1024, // 10M
-
-      onBeforeUpload(file: File) {
-        console.log('onBeforeUpload', file)
-        return file // 上传 file 文件
-        // return false // 会阻止上传
-      },
-      onProgress(progress: number) {
-        console.log('onProgress', progress)
-      },
-      onSuccess(file: File, res: any) {
-        console.log('onSuccess', file, res)
-      },
-      onFailed(file: File, res: any) {
-        alert(res.message)
-        console.log('onFailed', file, res)
-      },
-      onError(file: File, err: Error, res: any) {
-        alert(err.message)
-        console.error('onError', file, err, res)
-      },
+    // // “上传附件”菜单的配置
+    // uploadAttachment: {
+    //   server: '/api/upload', // 服务端地址
+    //   timeout: 5 * 1000, // 5s
+    //
+    //   fieldName: 'custom-fileName',
+    //   meta: { token: 'xxx', a: 100 }, // 请求时附加的数据
+    //   metaWithUrl: true, // meta 拼接到 url 上
+    //   headers: { Accept: 'text/x-json' },
+    //
+    //   maxFileSize: 10 * 1024 * 1024, // 10M
+    //
+    //   onBeforeUpload(file: File) {
+    //     console.log('onBeforeUpload', file)
+    //     return file // 上传 file 文件
+    //     // return false // 会阻止上传
+    //   },
+    //   onProgress(progress: number) {
+    //     console.log('onProgress', progress)
+    //   },
+    //   onSuccess(file: File, res: any) {
+    //     console.log('onSuccess', file, res)
+    //   },
+    //   onFailed(file: File, res: any) {
+    //     alert(res.message)
+    //     console.log('onFailed', file, res)
+    //   },
+    //   onError(file: File, err: Error, res: any) {
+    //     alert(err.message)
+    //     console.error('onError', file, err, res)
+    //   },
 
       // // 上传成功后，用户自定义插入文件
       // customInsert(res: any, file: File, insertFn: Function) {
@@ -108,19 +108,19 @@ const editorConfig: Partial<IEditorConfig> = {
       //   insertFn(`customInsert-${file.name}`, url)
       // },
 
-      // // 用户自定义上传
-      // customUpload(file: File, insertFn: Function) {
-      //   console.log('customUpload', file)
-
-      //   return new Promise(resolve => {
-      //     // 插入一个文件，模拟异步
-      //     setTimeout(() => {
-      //       const src = `https://www.w3school.com.cn/i/movie.ogg`
-      //       insertFn(`customUpload-${file.name}`, src)
-      //       resolve('ok')
-      //     }, 500)
-      //   })
-      // },
+      // 用户自定义上传
+      customUpload(file: File, insertFn: Function) {
+        console.log('customUpload', file)
+        // 返回 Promise，必须
+        return new Promise(resolve => {
+          // 插入一个文件，模拟异步
+          setTimeout(() => {
+            const src = `https://www.w3school.com.cn/i/movie.ogg`
+            insertFn(`customUpload-${file.name}`, src)
+            resolve('ok')
+          }, 500)
+        })
+      },
 
       // // 自定义选择
       // customBrowseAndUpload(insertFn: Function) {
