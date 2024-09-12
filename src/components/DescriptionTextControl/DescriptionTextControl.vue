@@ -134,11 +134,11 @@ const editorConfig: Partial<IEditorConfig> = {
         console.log('inserted attachment', elem)
       },
     },
-  },
 
   // 其他...
 }
 
+editorConfig.maxLength = 1000
 
 const mode = 'default' // 或 'simple'
 toolbarConfig.toolbarKeys = [
